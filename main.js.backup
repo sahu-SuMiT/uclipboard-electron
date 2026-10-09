@@ -4,8 +4,8 @@ const crypto = require('crypto');
 const http = require('http');
 const fs = require('fs');
 
-const GOOGLE_CLIENT_ID = '182811055658-ngfimda2321auseg45spn2b615hosae4.apps.googleusercontent.com';
-const GOOGLE_CLIENT_SECRET = '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'
+const GOOGLE_CLIENT_ID = 'xxx';
+const GOOGLE_CLIENT_SECRET = 'YYY'
 
 function generatePKCE() {
     const verifier = crypto.randomBytes(32).toString('base64url');

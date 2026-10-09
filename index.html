@@ -163,7 +163,7 @@
         });
 
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
-        import { getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithCredential, signOut } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+        import { initializeAuth, indexedDBLocalPersistence, browserLocalPersistence, GoogleAuthProvider, onAuthStateChanged, signInWithCredential, signOut } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
         import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
         const firebaseConfig = {
@@ -177,7 +177,9 @@
         };
 
         const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app)
+        const auth = initializeAuth(app, {
+            persistence: [indexedDBLocalPersistence, browserLocalPersistence]
+        });
         const provider = new GoogleAuthProvider();
         const db = getFirestore(app);
 
