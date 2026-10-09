@@ -1,0 +1,29 @@
+{
+  "name": "universalclipboard",
+  "version": "1.0.0",
+  "description": "A universal clipboard application",
+  "main": "main.js",
+  "desktopName": "com.uclipboard.app",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder"
+  },
+  "author": "Sumit Sahu",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^44.7.0",
+    "electron-builder": "^26.15.3"
+  },
+  "build": {
+    "appId": "com.uclipboard.app",
+    "productName": "uClipboard",
+    "linux": {
+      "target": [
+        "AppImage"
+      ],
+      "category": "Utility",
+      "icon": "icon.png",
+      "syncDesktopName": true
+    }
+  }
+}

@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>uClipboard</title>
+    <link rel="icon" href="data:image/svg+xml,
+        <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'>
+        <text x='50' y='72' text-anchor='middle' font-family='Arial, sans-serif' font-size='75' font-weight='700' fill='%236366f1'>U</text>
+        </svg>">
+    <style>
+        html,
+        body {
+            background-color: #09090b !important;
+        }
+
+        body {
+            visibility: hidden;
+        }
+
+        body.loaded {
+            visibility: visible;
+        }
+
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #09090b;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #27272a;
+            border-radius: 6px;
+            border: 3px solid #09090b;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3f3f46;
+        }
+
+        * {
+            scrollbar-width: thin;
+            scrollbar-color: #27272a #09090b;
+        }
+
+        :fullscreen #app-view {
+            width: 100vw;
+            max-width: none;
+            min-height: 100vh;
+            height: 100vh;
+            margin: 0;
+            padding: 1px;
+            box-sizing: border-box;
+        }
+
+        /* :fullscreen #paste-box {
+            border-color: rgb(99 102 241 / 0.8);
+            box-shadow: 0 0 0 1px rgb(99 102 241 / 0.8);
+            border-radius: 0;
+        } */
+    </style>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-[#09090b] text-gray-100 min-h-screen flex items-center justify-center font-sans">
+    <!-- Container 1 visible by default -->
+    <main id="login-view" class="w-full max-w-sm px-5">
+        <div class="relative bg-[#111113] border border-white/[0.08] rounded-3xl
+                    shadow-[0_25px_80px_rgba(0,0,0,0.45)]
+                    px-7 py-9 sm:px-9 sm:py-10 text-center overflow-hidden">
+
+            <div class="absolute -top-24 left-1/2 -translate-x-1/2
+                        w-48 h-48 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none">
+            </div>
+            <div class="relative mx-auto mb-7 w-16 h-16 rounded-2xl
+                        bg-indigo-500/[0.08]
+                        border border-indigo-400/[0.15]
+                        flex items-center justify-center
+                        shadow-[0_0_35px_rgba(99,102,241,0.08)]">
+
+                <svg class="w-8 h-8 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2
+                             M9 5a3 3 0 016 0M9 5h6" />
+                </svg>
+            </div>
+            <h1 class="text-xl font-bold text-indigo-400">UniversalClipboard</h1>
+            <br>
+            <!-- Google Button -->
+            <button id="login-btn" class="group w-full h-10
+                bg-[#18181b] hover:bg-[#202024]
+                text-gray-200 hover:text-white
+                rounded-xl
+                flex items-center justify-center gap-3
+                font-medium text-sm
+                border border-white/[0.06] hover:border-white/[0.15]
+                shadow-[0_4px_20px_rgba(0,0,0,0.3)]
+                transition-all duration-200
+                active:scale-[0.985]">
+
+                <!-- Google Logo -->
+                <svg class="w-[20px] h-[20px]" viewBox="0 0 24 24">
+                    <path fill="#4285F4"
+                        d="M21.35 12.27c0-.79-.07-1.55-.2-2.27H12v4.3h5.22a4.47 4.47 0 01-1.94 2.94v2.45h3.14c1.84-1.69 2.93-4.18 2.93-7.42z" />
+
+                    <path fill="#34A853"
+                        d="M12 21.5c2.63 0 4.84-.87 6.45-2.36l-3.14-2.45c-.87.58-1.98.92-3.31.92-2.54 0-4.69-1.72-5.46-4.03H3.3v2.53A9.74 9.74 0 0012 21.5z" />
+
+                    <path fill="#FBBC05"
+                        d="M6.54 13.58A5.86 5.86 0 016.24 12c0-.55.1-1.08.3-1.58V7.89H3.3A9.75 9.75 0 002.25 12c0 1.57.38 3.05 1.05 4.11l3.24-2.53z" />
+
+                    <path fill="#EA4335"
+                        d="M12 6.39c1.43 0 2.71.49 3.72 1.45l2.79-2.79C16.84 3.4 14.63 2.5 12 2.5a9.74 9.74 0 00-8.7 5.39l3.24 2.53C7.31 8.11 9.46 6.39 12 6.39z" />
+                </svg>
+
+                <span>Google</span>
+
+                <svg class="w-4 h-4 ml-1 text-gray-400
+                            transition-transform duration-200
+                            group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+            </button>
+            <br>
+            <p>By signing you agree with our terms and privacy</p>
+        </div>
+
+    </main>
+    <!-- Container 2 hidden by default -->
+    <div id="app-view"
+        class="opacity-0 scale-95 transition-all duration-500 w-full max-w-5xl px-4 py-8 mx-auto flex flex-col min-h-screen justify-start">
+        <header id="app-header" class="flex justify-between items-center mb-6 pb-4 border-b border-white/[0.06]">
+            <div>
+                <h1 class="text-xl font-bold text-indigo-400">UniversalClipboard</h1>
+                <p id="user-email" class="text-xs text-gray-400 mt-0.5"></p>
+            </div>
+            <div class="flex items-center gap-2">
+                <button id="fullscreen-btn" class="text-xs bg-[#18181b] hover:bg-[#202024] text-gray-300 hover:text-white
+               py-2 px-3 border border-white/[0.06] transition-all" title="Fullscreen">
+                    ⛶
+                </button>
+                <button id="logout-btn"
+                    class="text-xs bg-[#401905] hover:bg-[#381503] text-white py-2 px-4  transition-all">
+                    Sign Out
+                </button>
+            </div>
+        </header>
+
+        <main class="flex-1 w-full p-0 flex flex-col">
+            <textarea id="paste-box" placeholder="your snippet starts here..."
+                class="flex-1 w-full bg-[#09090b] border border-white/[0.06] rounded-xl p-4 text-gray-400 placeholder-gray-600 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-transparent resize-none transition-all"></textarea>
+        </main>
+    </div>
+
+    <script type="module">
+        window.addEventListener("load", () => {
+            setTimeout(() => {
+                document.body.classList.add("loaded");
+            }, 1500)
+        });
+
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+        import { getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithCredential, signOut } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+        import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBPfEsaakfx1TItc9gK_Tig8hEbU9L7hgM",
+            authDomain: "universal-clipboard-114ec.firebaseapp.com",
+            projectId: "universal-clipboard-114ec",
+            storageBucket: "universal-clipboard-114ec.firebasestorage.app",
+            messagingSenderId: "182811055658",
+            appId: "1:182811055658:web:12058d36f352ee6a6ad553",
+            measurementId: "G-B49RKFKG60"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app)
+        const provider = new GoogleAuthProvider();
+        const db = getFirestore(app);
+
+        const loginButton = document.getElementById('login-btn');
+        const loginView = document.getElementById("login-view");
+        const appView = document.getElementById('app-view');
+        const userEmail = document.getElementById('user-email');
+        const logoutBtn = document.getElementById('logout-btn');
+
+        loginButton.addEventListener('click', async () => {
+            try {
+                const result = await window.electronAPI.loginWithGoogle();
+
+                console.log("Authenticated:", result);
+
+                const credential = GoogleAuthProvider.credential(
+                    result.idToken
+                );
+
+                await signInWithCredential(auth, credential);
+
+            } catch (error) {
+                console.error("Google OAuth failed:", error);
+                alert("Login failed: " + error.message);
+            }
+        });
+
+        const pasteBox = document.getElementById("paste-box");
+        let debounceTimer;
+        let noteDocRef = null;
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                appView.classList.remove('opacity-0', 'scale-95');
+                appView.classList.add('opacity-100', 'scale-100');
+                userEmail.textContent = user.email;
+                appView.classList.remove("hidden");
+                loginView.classList.add("hidden");
+
+                //cloud to screen
+                noteDocRef = doc(db, "clipboards", user.uid);
+                onSnapshot(noteDocRef, (snapshot) => {
+                    if (snapshot.exists()) {
+                        const remoteText = snapshot.data().text || "";
+
+                        if (remoteText !== pasteBox.value) {
+                            pasteBox.value = remoteText;
+                        }
+                    }
+                });
+
+
+            } else {
+                appView.classList.add("hidden");
+                loginView.classList.remove("hidden");
+                pasteBox.value = "";
+            }
+        });
+        //screen to cloud
+        pasteBox.addEventListener("input", () => {
+            if (!noteDocRef) return;
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(async () => {
+                try {
+                    await setDoc(noteDocRef, {
+                        text: pasteBox.value,
+                        updatedAt: new Date()
+                    }, { merge: true });
+
+                } catch (error) {
+                    console.error("cloud sync failed", error.message);
+                }
+            }, 500)
+        });
+        logoutBtn.addEventListener('click', () => {
+            signOut(auth).catch((error) => {
+                console.error("Sign Out Failed:", error);
+            });
+        });
+
+        const fullscreenBtn = document.getElementById("fullscreen-btn");
+        const appHeader = document.getElementById("app-header");
+
+        fullscreenBtn.addEventListener("click", async () => {
+            if (!document.fullscreenElement) {
+                await document.documentElement.requestFullscreen();
+            } else {
+                await document.exitFullscreen();
+            }
+        })
+        document.addEventListener("fullscreenchange", () => {
+            if (document.fullscreenElement) {
+                appHeader.classList.add("hidden");
+            } else {
+                appHeader.classList.remove("hidden");
+            }
+        })
+        // disable the default tab
+
+        pasteBox.addEventListener("keydown", (event) => {
+            if (event.key === "Tab") {
+                event.preventDefault();
+                const start = pasteBox.selectionStart;
+                const end = pasteBox.selectionEnd;
+                pasteBox.value = pasteBox.value.substring(0, start) + "    " + pasteBox.value.substring(end);
+                pasteBox.selectionStart = pasteBox.selectionEnd = start + 4;
+            }
+        });
+
+
+
+    </script>
+</body>
+
+</html>
