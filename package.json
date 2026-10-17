@@ -8,7 +8,8 @@
     "start": "electron .",
     "build": "electron-builder",
     "build:linux": "electron-builder --linux",
-    "build:win": "electron-builder --win nsis"
+    "build:win": "electron-builder --win nsis",
+    "build:mac": "electron-builder --mac"
   },
   "author": "Sumit Sahu",
   "license": "MIT",
@@ -31,6 +32,12 @@
       ],
       "category": "Utility",
       "icon": "icon.png"
+    },
+    "mac": {
+      "target": [
+        "dmg"
+      ],
+      "icon": "icon.icns"
     }
   }
 }
