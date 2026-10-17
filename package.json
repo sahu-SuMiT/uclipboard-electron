@@ -6,7 +6,9 @@
   "desktopName": "com.uclipboard.app",
   "scripts": {
     "start": "electron .",
-    "build": "electron-builder"
+    "build": "electron-builder",
+    "build:linux": "electron-builder --linux",
+    "build:win": "electron-builder --win nsis"
   },
   "author": "Sumit Sahu",
   "license": "MIT",
@@ -17,13 +19,18 @@
   "build": {
     "appId": "com.uclipboard.app",
     "productName": "uClipboard",
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "icon": "icon.ico"
+    },
     "linux": {
       "target": [
         "AppImage"
       ],
       "category": "Utility",
-      "icon": "icon.png",
-      "syncDesktopName": true
+      "icon": "icon.png"
     }
   }
 }
